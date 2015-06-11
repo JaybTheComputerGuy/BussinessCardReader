@@ -6,10 +6,17 @@ package com.example.jayb.bizcard;
 public class BizCardDataSource {
     private String job_title;
     private int cell_number;
+    private String url;
+    private String email;
+    private String name;
 
-    public BizCardDataSource(String title,int cell_number){
+    public BizCardDataSource(String title,int number,String web_url,String email_addres,String full_names){
         this.job_title = title;
-        this.cell_number = cell_number;
+        this.cell_number = number;
+        this.url = web_url;
+        this.email = email_addres;
+        this.name = full_names;
+
     }
 
     public String getTitle() {

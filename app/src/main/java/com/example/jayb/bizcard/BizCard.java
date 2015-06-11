@@ -2,6 +2,7 @@ package com.example.jayb.bizcard;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class BizCard extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         populateList();
         populateListView();
         registerButtonCallBack(); //When you want to add a new contact info
@@ -45,9 +47,16 @@ public class BizCard extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position , long id) {
+                Intent newIntent = new Intent(getBaseContext(),DetailActivity.class);
+
                 BizCardDataSource dataSrc = datasource.get(position);
-                String message = "View " + dataSrc.getTitle();
-                Toast.makeText(BizCard.this,message,Toast.LENGTH_SHORT).show();
+
+                newIntent.putExtra("job_title",dataSrc.getTitle());
+                newIntent.putExtra("name",dataSrc.getTitle());
+                newIntent.putExtra("cell_number",dataSrc.getTitle());
+                newIntent.putExtra("email",dataSrc.getTitle());
+                newIntent.putExtra("url",dataSrc.getTitle());
+
             }
         });
     }

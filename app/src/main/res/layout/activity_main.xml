@@ -33,6 +33,16 @@
             android:typeface="normal" />
     </LinearLayout>
 
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="10dp"
+        >
+
+    </SearchView>
+
     <ListView
         android:id="@+id/contacts_list"
         android:layout_width="match_parent"

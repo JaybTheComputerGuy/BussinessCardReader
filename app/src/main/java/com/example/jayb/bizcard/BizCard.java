@@ -41,12 +41,12 @@ public class BizCard extends ActionBarActivity {
 
     }
 
-    private void registerListCallBack() {
+    private void registerListCallBack(){
         ListView list = (ListView) findViewById(R.id.contacts_list);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position , long id) {
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position , long id){
                 Intent newIntent = new Intent(getBaseContext(),DetailActivity.class);
 
                 BizCardDataSource dataSrc = datasource.get(position);
@@ -79,14 +79,11 @@ public class BizCard extends ActionBarActivity {
     }
 
     private void populateList() {
-        datasource.add(new BizCardDataSource("Finance Manager",0720123456));
-        datasource.add(new BizCardDataSource("System Administrator",0712345671));
-        datasource.add(new BizCardDataSource("Project Manager",0723123426));
-        datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452));
-        datasource.add(new BizCardDataSource("Accountant",0720123456));
-        datasource.add(new BizCardDataSource("Partnership Director",0712345671));
-        datasource.add(new BizCardDataSource("Clerk",0723123426));
-        datasource.add(new BizCardDataSource("HeadMaster",0721123452));
+        datasource.add(new BizCardDataSource("Finance Manager",0720123456,"www.bizcard.com","bizcard@gmail.com","Dennis Ochieng"));
+        datasource.add(new BizCardDataSource("System Administrator",0712345671,"www.trello.com","jayb@trello.com","Emmanuel Jayb"));
+        datasource.add(new BizCardDataSource("Project Manager",0723123426,"www.sana.org","ougo@gmail.com","Ougo Ken"));
+        datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452,"www.takaka.com","wini@gmail.com","Winnie Akinyi"));
+        datasource.add(new BizCardDataSource("Accountant",0720123456,"www,favourandmercy.or.ke","favour@gmail.com","Grace sewe"));
     }
 
 

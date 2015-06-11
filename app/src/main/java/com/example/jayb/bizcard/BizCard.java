@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BizCard extends Activity {
+public class BizCard extends ActionBarActivity {
     private ArrayList<BizCardDataSource> datasource = new ArrayList<BizCardDataSource>();
 
 
@@ -29,7 +29,9 @@ public class BizCard extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         populateList();
         populateListView();
         registerButtonCallBack(); //When you want to add a new contact info
@@ -72,6 +74,10 @@ public class BizCard extends Activity {
         datasource.add(new BizCardDataSource("System Administrator",0712345671));
         datasource.add(new BizCardDataSource("Project Manager",0723123426));
         datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452));
+        datasource.add(new BizCardDataSource("Accountant",0720123456));
+        datasource.add(new BizCardDataSource("Partnership Director",0712345671));
+        datasource.add(new BizCardDataSource("Clerk",0723123426));
+        datasource.add(new BizCardDataSource("HeadMaster",0721123452));
     }
 
 
@@ -116,7 +122,7 @@ public class BizCard extends Activity {
             job_title.setText(dataSrc.getTitle());
 
             TextView cell_number = (TextView) itemView.findViewById(R.id.cell_number);
-            cell_number.setText("" + dataSrc.getTitle());
+            cell_number.setText("" + dataSrc.getNumber());
 
             return itemView;
         }

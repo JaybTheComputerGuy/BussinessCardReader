@@ -22,6 +22,7 @@ import java.util.List;
 
 
 public class BizCard extends ActionBarActivity {
+    public static final int CONTACT_REQUEST_ENTRY_CODE = 1;
     private ArrayList<BizCardDataSource> datasource = new ArrayList<BizCardDataSource>();
 
 
@@ -43,19 +44,19 @@ public class BizCard extends ActionBarActivity {
 
     private void registerListCallBack(){
         ListView list = (ListView) findViewById(R.id.contacts_list);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position , long id){
-                Intent newIntent = new Intent(getBaseContext(),DetailActivity.class);
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                Intent newIntent = new Intent(getBaseContext(), DetailActivity.class);
 
                 BizCardDataSource dataSrc = datasource.get(position);
 
-                newIntent.putExtra("job_title",dataSrc.getTitle());
-                newIntent.putExtra("name",dataSrc.getTitle());
-                newIntent.putExtra("cell_number",dataSrc.getTitle());
-                newIntent.putExtra("email",dataSrc.getTitle());
-                newIntent.putExtra("url",dataSrc.getTitle());
+                newIntent.putExtra("job_title", dataSrc.getTitle());
+                newIntent.putExtra("name", dataSrc.getTitle());
+                newIntent.putExtra("cell_number", dataSrc.getTitle());
+                newIntent.putExtra("email", dataSrc.getTitle());
+                newIntent.putExtra("url", dataSrc.getTitle());
 
             }
         });
@@ -83,7 +84,7 @@ public class BizCard extends ActionBarActivity {
         datasource.add(new BizCardDataSource("System Administrator",0712345671,"www.trello.com","jayb@trello.com","Emmanuel Jayb"));
         datasource.add(new BizCardDataSource("Project Manager",0723123426,"www.sana.org","ougo@gmail.com","Ougo Ken"));
         datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452,"www.takaka.com","wini@gmail.com","Winnie Akinyi"));
-        datasource.add(new BizCardDataSource("Accountant",0720123456,"www,favourandmercy.or.ke","favour@gmail.com","Grace sewe"));
+        datasource.add(new BizCardDataSource("Accountant", 0720123456, "www,favourandmercy.or.ke", "favour@gmail.com", "Grace sewe"));
     }
 
 
@@ -106,8 +107,33 @@ public class BizCard extends ActionBarActivity {
             return true;
         }
 
+        if(id == R.id.add_contact_menu){
+            Intent intent = new Intent(this,AddContacts.class);
+            startActivityForResult(intent,CONTACT_REQUEST_ENTRY_CODE);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
+    protected void onActivityResult(int requestcode,int resultcode,Intent data){
+        if(requestcode == CONTACT_REQUEST_ENTRY_CODE){
+            if(resultcode == RESULT_OK){
+                String name = data.getStringExtra("first_name");
+                name += data.getStringExtra("last_name");
+                String email = data.getStringExtra("email");
+                String url = data.getStringExtra("url");
+                String title = data.getStringExtra("title");
+
+
+                datasource.add(new BizCardDataSource(title,0724123456,url,email,name));
+                ArrayAdapter<BizCardDataSource> adapter = new MyListAdapter();
+                adapter.notifyDataSetChanged();
+            }
+
+        }
+    }
+
 
     private class MyListAdapter extends ArrayAdapter<BizCardDataSource>{
         public MyListAdapter() {

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.jayb.bizcard.data.BizCardDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class BizCard extends ActionBarActivity {
     public static final int CONTACT_REQUEST_ENTRY_CODE = 1;
+    private BizCardDatabaseHelper databaseHelper;
     private ArrayList<BizCardDataSource> datasource = new ArrayList<BizCardDataSource>();
 
 
@@ -37,6 +39,7 @@ public class BizCard extends ActionBarActivity {
 
         populateList();
         populateListView();
+        databaseHelper = new BizCardDatabaseHelper(this);
         registerButtonCallBack(); //When you want to add a new contact info
         registerListCallBack();
 
@@ -121,9 +124,12 @@ public class BizCard extends ActionBarActivity {
             if(resultcode == RESULT_OK){
                 String name = data.getStringExtra("first_name");
                 name += data.getStringExtra("last_name");
+                String num = data.getStringExtra("phone_number");
                 String email = data.getStringExtra("email");
                 String url = data.getStringExtra("url");
                 String title = data.getStringExtra("title");
+
+                databaseHelper.saveContacts(name,num,title,url,email);
 
 
                 datasource.add(new BizCardDataSource(title,0724123456,url,email,name));

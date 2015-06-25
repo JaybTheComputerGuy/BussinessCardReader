@@ -29,6 +29,9 @@ public class AddContacts extends Activity {
         EditText last_name = (EditText)findViewById(R.id.edit_last_name);
         intent.putExtra("last_name",last_name.getText().toString());
 
+        EditText phone_number = (EditText)findViewById(R.id.edit_phone_number);
+        intent.putExtra("phone_number",phone_number.getText().toString());
+
         EditText email = (EditText)findViewById(R.id.edit_email);
         intent.putExtra("email",email.getText().toString());
 

@@ -1,9 +1,12 @@
 package com.example.jayb.bizcard;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -11,47 +14,23 @@ import java.util.ArrayList;
 /**
  * Created by jayb on 6/8/15.
  */
-public class BizCardAdapter extends BaseAdapter {
-    private ArrayList<BizCardDataSource> datasource = new ArrayList<BizCardDataSource>();
+public class BizCardAdapter extends CursorAdapter {
 
-    public BizCardAdapter(){
-        datasource.add(new BizCardDataSource("Finance Manager",0720123456,"www.financeman.com","finance@gmail.com","Steven Otieno"));
-        datasource.add(new BizCardDataSource("System Administrator",0712345671,"www.systemsadmin.com","sysadmin@gmail.com","Edward Otieno"));
-        datasource.add(new BizCardDataSource("Project Manager",0723123426,"www.projectmanag.com","project@gmail.com","Steven Sewe"));
-        datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452,"www.infra.com","infra@yahoo.com","Emmanuel Ongogo"));
+    public BizCardAdapter(Context context,Cursor cursor){
+        super(context,cursor);
     }
 
 
     @Override
-    public int getCount() {
-        return datasource.size();
+    public View newView(Context context, Cursor cursor, ViewGroup parent){
+        return LayoutInflater.from(context).inflate(R.layout.contact_info,parent,false);
     }
 
     @Override
-    public Object getItem(int position) {
-        return getItem(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        if(view == null){
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            view = inflater.inflate(R.layout.contact_info,parent,false);
-        }
-
-        BizCardDataSource dataSrc = datasource.get(position);
-
-        TextView job_title = (TextView) view.findViewById(R.id.job_title);
-        job_title.setText(dataSrc.getTitle());
-
-        TextView cell_number = (TextView) view.findViewById(R.id.cell_number);
-        cell_number.setText("" + dataSrc.getTitle());
-
-        return view;
+    public void bindView(View view, Context context, Cursor cursor){
+        TextView titleView = (TextView) view.findViewById(R.id.job_title);
+        titleView.setText(cursor.getString(cursor.getColumnIndex("Title")));
+        TextView cell_number = (TextView)view.findViewById(R.id.cell_number);
+        cell_number.setText(cursor.getString(cursor.getColumnIndex("cell")));
     }
 }

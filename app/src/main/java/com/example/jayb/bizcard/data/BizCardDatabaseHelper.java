@@ -10,11 +10,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by jayb on 6/24/15.
  */
 public class BizCardDatabaseHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "bizcard.db";
     private static final String TABLE_NAME  = "contact_records";
 
-    private static final String  BIZCARD_COLUMN_ID = "id";
+    private static final String  BIZCARD_COLUMN_ID = "_id";
     private static final String  BIZCARD_COLUMN_NAME = "Name";
     private static final String  BIZCARD_COLUMN_TITLE = "Title";
     private static final String  BIZCARD_COLUMN_URL = "url";
@@ -53,13 +53,13 @@ public class BizCardDatabaseHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db){
-            db.execSQL("CREATE TABLE" + TABLE_NAME + "(" +
-                            BIZCARD_COLUMN_ID + "INTEGER PRIMARY KEY," +
-                            BIZCARD_COLUMN_NAME + "TEXT," +
-                            BIZCARD_COLUMN_TITLE + "TEXT," +
-                            BIZCARD_COLUMN_URL + "TEXT," +
-                            BIZCARD_COLUMN_CELL + "TEXT," +
-                            BIZCARD_COLUMN_EMAIL + "TEXT"
+            db.execSQL("CREATE TABLE " + TABLE_NAME + " ( " +
+                            BIZCARD_COLUMN_ID + " INTEGER PRIMARY KEY," +
+                            BIZCARD_COLUMN_NAME + " TEXT, " +
+                            BIZCARD_COLUMN_TITLE + " TEXT, " +
+                            BIZCARD_COLUMN_URL + " TEXT, " +
+                            BIZCARD_COLUMN_CELL + " TEXT, " +
+                            BIZCARD_COLUMN_EMAIL + " TEXT" + ")"
             );
         }
 
@@ -71,9 +71,5 @@ public class BizCardDatabaseHelper {
 
 
     }
-
-
-
-
 
 }

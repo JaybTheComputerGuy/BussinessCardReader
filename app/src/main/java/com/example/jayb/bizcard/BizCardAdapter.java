@@ -15,10 +15,10 @@ public class BizCardAdapter extends BaseAdapter {
     private ArrayList<BizCardDataSource> datasource = new ArrayList<BizCardDataSource>();
 
     public BizCardAdapter(){
-        datasource.add(new BizCardDataSource("Finance Manager",0720123456));
-        datasource.add(new BizCardDataSource("System Administrator",0712345671));
-        datasource.add(new BizCardDataSource("Project Manager",0723123426));
-        datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452));
+        datasource.add(new BizCardDataSource("Finance Manager",0720123456,"www.financeman.com","finance@gmail.com","Steven Otieno"));
+        datasource.add(new BizCardDataSource("System Administrator",0712345671,"www.systemsadmin.com","sysadmin@gmail.com","Edward Otieno"));
+        datasource.add(new BizCardDataSource("Project Manager",0723123426,"www.projectmanag.com","project@gmail.com","Steven Sewe"));
+        datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452,"www.infra.com","infra@yahoo.com","Emmanuel Ongogo"));
     }
 
 

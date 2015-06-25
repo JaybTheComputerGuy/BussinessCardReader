@@ -1,31 +1,21 @@
 package com.example.jayb.bizcard;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 import com.example.jayb.bizcard.data.BizCardDatabaseHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class BizCard extends ActionBarActivity {
     public static final int CONTACT_REQUEST_ENTRY_CODE = 1;
     private BizCardDatabaseHelper databaseHelper;
-    private ArrayList<BizCardDataSource> datasource = new ArrayList<BizCardDataSource>();
+    private BizCardAdapter adapter;
 
 
 
@@ -37,33 +27,13 @@ public class BizCard extends ActionBarActivity {
         getSupportActionBar().setLogo(R.drawable.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        populateList();
         populateListView();
         databaseHelper = new BizCardDatabaseHelper(this);
         registerButtonCallBack(); //When you want to add a new contact info
-        registerListCallBack();
+
 
     }
 
-    private void registerListCallBack(){
-        ListView list = (ListView) findViewById(R.id.contacts_list);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Intent newIntent = new Intent(getBaseContext(), DetailActivity.class);
-
-                BizCardDataSource dataSrc = datasource.get(position);
-
-                newIntent.putExtra("job_title", dataSrc.getTitle());
-                newIntent.putExtra("name", dataSrc.getTitle());
-                newIntent.putExtra("cell_number", dataSrc.getTitle());
-                newIntent.putExtra("email", dataSrc.getTitle());
-                newIntent.putExtra("url", dataSrc.getTitle());
-
-            }
-        });
-    }
 
     private void registerButtonCallBack() {
         final Button btn_add = (Button)findViewById(R.id.btn_camera);
@@ -76,18 +46,12 @@ public class BizCard extends ActionBarActivity {
 
     }
 
-    private void populateListView() {
-        ArrayAdapter<BizCardDataSource> adapter = new MyListAdapter();
+    private void populateListView(){
+        databaseHelper = new BizCardDatabaseHelper(this);
+        Cursor contact_list = databaseHelper.getAllRecords();
+        adapter = new BizCardAdapter(this,contact_list);
         ListView list = (ListView)findViewById(R.id.contacts_list);
         list.setAdapter(adapter);
-    }
-
-    private void populateList() {
-        datasource.add(new BizCardDataSource("Finance Manager",0720123456,"www.bizcard.com","bizcard@gmail.com","Dennis Ochieng"));
-        datasource.add(new BizCardDataSource("System Administrator",0712345671,"www.trello.com","jayb@trello.com","Emmanuel Jayb"));
-        datasource.add(new BizCardDataSource("Project Manager",0723123426,"www.sana.org","ougo@gmail.com","Ougo Ken"));
-        datasource.add(new BizCardDataSource("Infrastructure Manager",0721123452,"www.takaka.com","wini@gmail.com","Winnie Akinyi"));
-        datasource.add(new BizCardDataSource("Accountant", 0720123456, "www,favourandmercy.or.ke", "favour@gmail.com", "Grace sewe"));
     }
 
 
@@ -129,40 +93,12 @@ public class BizCard extends ActionBarActivity {
                 String url = data.getStringExtra("url");
                 String title = data.getStringExtra("title");
 
-                databaseHelper.saveContacts(name,num,title,url,email);
+                databaseHelper.saveContacts(name, num, title, url, email);
+                adapter.changeCursor(databaseHelper.getAllRecords());
 
-
-                datasource.add(new BizCardDataSource(title,0724123456,url,email,name));
-                ArrayAdapter<BizCardDataSource> adapter = new MyListAdapter();
-                adapter.notifyDataSetChanged();
             }
 
         }
     }
 
-
-    private class MyListAdapter extends ArrayAdapter<BizCardDataSource>{
-        public MyListAdapter() {
-            super(BizCard.this, R.layout.contact_info,datasource);
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup parent){
-            View itemView = view;
-
-            if(view == null){
-                 itemView = getLayoutInflater().inflate(R.layout.contact_info, parent, false);
-            }
-
-            BizCardDataSource dataSrc = datasource.get(position);
-
-            TextView job_title = (TextView) itemView.findViewById(R.id.job_title);
-            job_title.setText(dataSrc.getTitle());
-
-            TextView cell_number = (TextView) itemView.findViewById(R.id.cell_number);
-            cell_number.setText("" + dataSrc.getNumber());
-
-            return itemView;
-        }
-    }
 }
